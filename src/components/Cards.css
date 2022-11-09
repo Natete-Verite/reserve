@@ -1,0 +1,51 @@
+.card {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .cardItem {
+    flex: 1;
+    margin: 0px 20px;
+    padding: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  }
+  
+  .cardTitle{
+      font-size: 20px;
+  }
+  
+  .cardMoneyContainer{
+      margin: 10px 0px;
+      display: flex;
+      align-items: center;
+  }
+  
+  .cardMoney{
+      font-size: 30px;
+      font-weight: 600;
+  }
+  
+  .cardMoneyRate{
+      display: flex;
+      align-items: center;
+      margin-left: 20px;
+  }
+  
+  .cardIcon{
+      font-size: 14px;
+      margin-left: 5px;
+      color: green;
+  }
+  
+  .cardIcon.negative{
+      color: red;
+  }
+  
+  .cardSub{
+      font-size: 15px;
+      color: gray;
+  }
