@@ -1,7 +1,7 @@
 .sidebar {
     width: 40vh;
     height: 100;
-    background-color: rgb(244, 244, 245);
+    background-color: #eff4f5;
     position: sticky;
     border-radius: 20px;
     margin-top: 35px;
@@ -18,7 +18,7 @@
   
   .sidebarTitle {
     font-size: 13px;
-    color: rgb(187, 186, 186);
+    color: rgb(132, 130, 130);
   }
   
   .sidebarList {

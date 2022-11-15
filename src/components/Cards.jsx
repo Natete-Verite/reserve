@@ -8,7 +8,7 @@ const Cards = () => {
     <div className="cardItem">
       <span className="cardTitle">Revenue</span>
       <div className="cardMoneyContainer">
-        <span className="cardMoney">$2,415</span>
+        <span className="cardMoney">$2,432</span>
         <span className="cardMoneyRate">
           -11.4 <ArrowDownward  className="cardIcon negative"/>
         </span>
@@ -18,7 +18,7 @@ const Cards = () => {
     <div className="cardItem">
       <span className="cardTitle">Sales</span>
       <div className="cardMoneyContainer">
-        <span className="cardMoney">$4,415</span>
+        <span className="cardMoney">$4,234</span>
         <span className="cardMoneyRate">
           -1.4 <ArrowDownward className="cardIcon negative"/>
         </span>
@@ -28,7 +28,7 @@ const Cards = () => {
     <div className="cardItem">
       <span className="cardTitle">Cost</span>
       <div className="cardMoneyContainer">
-        <span className="cardMoney">$2,225</span>
+        <span className="cardMoney">$2,223</span>
         <span className="cardMoneyRate">
           +2.4 <ArrowUpward className="cardIcon"/>
         </span>
