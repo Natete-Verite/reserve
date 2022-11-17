@@ -4,63 +4,63 @@ import BarChart from "../charts/BarChart";
 import PieChart from "../charts/PieChart.js";
 import './home.css'
 import {db} from "../firebase";
-import { QuerySnapshot, collection, doc, getDoc } from "firebase/firestore";
+import { AppData } from "../charts/Data";
+import { QuerySnapshot, collection, getDocs } from "firebase/firestore";
 // import { async } from "@firebase/util";
 
 const Home = () => {
-  
- 
-  // console.log(docRef, "inform");
-  useEffect(()=>{
-    const docRef = collection(db, "info");
-    const information = async ()=>{
-      const docSnap = await getDoc(docRef)
-      if (docSnap.exists()){
-        console.log("Document data:", docSnap.data());
-      }else{
-        console.log("No such document");
-      }
+  const [data, setData] = useState([]);
+
+  const [userData, setUserData] = useState({
+    labels: data.map((data) => data.year),
+    datasets: [{
+      label: "Users Gained",
+      data: data.map((data) => data.userGain),
+      backgroundColor: [
+        "rgba(75,192,192,1)",
+          "#ecf0f1",
+          "#50AF95",
+          "#f3ba2f",
+          "#2a71d0",
+      ],
+      borderWidth: 1,
+    },
+  ],
+  });
+
+  useEffect(() => {
+    const arrayData = [];
+    const colRef = collection(db, 'appdata');
+    getDocs(colRef).then((snapshots) => {
+      snapshots.docs.map((item) => {
+        arrayData.push(item.data())
+        // console.log(item.data(), "hwgjldls");
+        // setData([...item.data()]);
+      });
+    });
+    if (arrayData.length>0) {
+      setData(arrayData)
     }
-    information()
-    console.log("information");
-  },[])
+  }, [data]);
   
-
-  // const [data, setData] = useState([])
-  // const [loader, setLoader] = useState(true)
-
-  // const getData = () => {
-  //   ref.onSnapshot((QuerySnapshot)=>{
-  //     const items = []
-  //     QuerySnapshot.forEach((doc)=>{
-  //       items.push(doc.data())
-  //     })
-  //     setData(items)
-  //     setLoader(false)
-  //   })
-  // }
-  // useEffect(()=>{
-  //   getData()
-  //   console.log(data);
-  // },[])
-
+      console.log(data.length, "array");
+  
   return (
     <div className="charts">
       <Cards />
-      {/* {docSnap === false && (docSnap.map((year)=>{ */}
+      
          
       <div className="chartcontainer">
         <div style={{ width: 500, marginLeft:70}}>
-          {/* <BarChart chartData={docSnap} /> */}
+          <BarChart chartData={userData} />
         </div>
         <div style={{ width: 280, marginLeft:20, }}>
-          {/* <PieChart chartData={docSnap} /> */}
+          <PieChart chartData={userData} />
         </div>
       </div>
-      </div> 
       
-  
+    </div>
   );
-};
+}
 
 export default Home;
