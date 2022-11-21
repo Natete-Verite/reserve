@@ -3,62 +3,66 @@ import Cards from "../components/Cards";
 import BarChart from "../charts/BarChart";
 import PieChart from "../charts/PieChart.js";
 import './home.css'
-import {db} from "../firebase";
+import { db } from "../firebase";
 import { AppData } from "../charts/Data";
-import { QuerySnapshot, collection, getDocs } from "firebase/firestore";
-// import { async } from "@firebase/util";
+import { collection, getDocs } from "firebase/firestore";
 
 const Home = () => {
-  const [data, setData] = useState([]);
 
-  const [userData, setUserData] = useState({
-    labels: data.map((data) => data.year),
+  const [userData, setData] = useState({
+    status: "loading",
+    labels: AppData.map((item) => item.year),
     datasets: [{
       label: "Users Gained",
-      data: data.map((data) => data.userGain),
+      data: AppData.map((item) => item.userGain),
       backgroundColor: [
         "rgba(75,192,192,1)",
-          "#ecf0f1",
-          "#50AF95",
-          "#f3ba2f",
-          "#2a71d0",
+        "#ecf0f1",
+        "#50AF95",
+        "#f3ba2f",
+        "#2a71d0",
       ],
       borderWidth: 1,
     },
-  ],
+    ],
   });
 
+
   useEffect(() => {
-    const arrayData = [];
-    const colRef = collection(db, 'appdata');
-    getDocs(colRef).then((snapshots) => {
-      snapshots.docs.map((item) => {
-        arrayData.push(item.data())
-        // console.log(item.data(), "hwgjldls");
-        // setData([...item.data()]);
+    const handleSyncData = async () => {
+      const colRef = await collection(db, 'appdata');
+      getDocs(colRef).then((snapshots) => {
+        setData({
+          status: "OK",
+          labels: snapshots.docs.map(item => item.data().year),
+          datasets: [{
+            label: userData.datasets[0].label, 
+            backgroundColor: userData.datasets[0].backgroundColor,
+            borderWidth: userData.datasets[0].borderWidth,
+            data: snapshots.docs.map(item => item.data().userGain)
+          }],
+        })
+
       });
-    });
-    if (arrayData.length>0) {
-      setData(arrayData)
-    }
-  }, [data]);
-  
-      console.log(data.length, "array");
-  
+    };
+    handleSyncData();
+  });
+
   return (
     <div className="charts">
       <Cards />
-      
-         
-      <div className="chartcontainer">
-        <div style={{ width: 500, marginLeft:70}}>
+
+
+      {userData.status === "loading" && <h1>Loading ...</h1>}
+      {userData.status === "OK" && <div className="chartcontainer">
+        <div style={{ width: 500, marginLeft: 70 }}>
           <BarChart chartData={userData} />
         </div>
-        <div style={{ width: 280, marginLeft:20, }}>
+        <div style={{ width: 280, marginLeft: 20, }}>
           <PieChart chartData={userData} />
         </div>
-      </div>
-      
+      </div>}
+
     </div>
   );
 }

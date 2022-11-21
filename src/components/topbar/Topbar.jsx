@@ -2,7 +2,7 @@ import React from "react";
 import "./topbar.css";
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
 import logo from "./kapsulelogo.png";
-import { logout } from "/home/student/reserve/src/firebase.js";
+import { logout } from "../../firebase";
 
 const Topbar = () => {
   return (
